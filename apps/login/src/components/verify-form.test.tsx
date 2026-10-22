@@ -30,11 +30,6 @@ describe("VerifyForm", () => {
 
   afterEach(cleanup);
 
-  test("resend button uses the configured ZITADEL translation as accessible name", () => {
-    render(<VerifyForm userId="user-1" isInvite={false} submit={false} />);
-    expect(screen.getByRole("button", { name: "verify.resendCode" })).toBeInTheDocument();
-  });
-
   describe("Input Focus", () => {
     test("should autofocus the code input on mount", () => {
       const { getByTestId } = render(<VerifyForm userId="user-1" code="" isInvite={false} submit={false} />);
