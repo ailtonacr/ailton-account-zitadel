@@ -36,7 +36,10 @@ describe("DynamicTheme — universal presentation", () => {
       </DynamicTheme>,
     );
 
-    expect(screen.getByAltText("logo").getAttribute("src")).toBe("/dynamic-logo.svg");
+    expect(screen.getAllByAltText("logo")).toHaveLength(2);
+    screen.getAllByAltText("logo").forEach((image) => {
+      expect(image.getAttribute("src")).toBe("/dynamic-logo.svg");
+    });
     expect(screen.getByRole("heading", { name: "Configured heading" })).toBeTruthy();
   });
 });
