@@ -90,7 +90,7 @@ export function SessionClearItem({ session, reload }: { session: Session; reload
 
         <span className="flex-grow"></span>
         <div className="relative flex flex-row items-center">
-          <div className="text-warn-light-500 dark:text-warn-dark-500 mr-6 flex hidden items-center justify-center rounded-full bg-warn-light-500/10 px-2 py-[2px] text-xs transition-all group-hover:block dark:bg-warn-light-500/10">
+          <div className="text-warn-light-500 dark:text-warn-dark-500 mr-6 flex hidden items-center justify-center rounded-full bg-warn-light-500/10 px-2 py-[2px] text-xs transition-all group-hover:block dark:bg-warn-dark-500/10">
             <Translated i18nKey="clear" namespace="logout" />
           </div>
 
