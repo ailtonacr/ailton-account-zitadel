@@ -153,10 +153,12 @@ export function SessionItem({ session, reload, requestId }: { session: Session; 
         {valid && session.expirationDate && (
           <Tooltip.Portal>
             <Tooltip.Content
-              className="bg-background-light-500 dark:bg-background-dark-500 z-50 rounded-md border px-3 py-2 text-xs text-black shadow-xl select-none dark:border-white/20 dark:text-white"
+              className="bg-background-light-500 dark:bg-background-dark-500 z-50 rounded-md border border-divider-light px-3 py-2 text-xs text-text-light-500 shadow-xl select-none dark:border-divider-dark dark:text-text-dark-500"
               sideOffset={5}
             >
-              Expires {moment(timestampDate(session.expirationDate)).fromNow()}
+              <time dateTime={timestampDate(session.expirationDate).toISOString()}>
+                {moment(timestampDate(session.expirationDate)).fromNow()}
+              </time>
               <Tooltip.Arrow className="fill-white dark:fill-white/20" />
             </Tooltip.Content>
           </Tooltip.Portal>

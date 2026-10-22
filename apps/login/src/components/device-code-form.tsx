@@ -27,6 +27,7 @@ export function DeviceCodeForm({ userCode }: { userCode?: string }) {
   });
 
   const t = useTranslations("device");
+  const tError = useTranslations("error");
 
   const [error, setError] = useState<string>("");
 
@@ -37,7 +38,7 @@ export function DeviceCodeForm({ userCode }: { userCode?: string }) {
 
     const response = await getDeviceAuthorizationRequest(value.userCode)
       .catch(() => {
-        setError("Could not continue the request");
+        setError(tError("noDeviceRequest"));
         return;
       })
       .finally(() => {
@@ -45,13 +46,13 @@ export function DeviceCodeForm({ userCode }: { userCode?: string }) {
       });
 
     if (!response || !response.deviceAuthorizationRequest?.id) {
-      setError("Could not continue the request");
+      setError(tError("noDeviceRequest"));
       return;
     }
 
     // the server picks /accounts (live session in this browser) or /loginname; consent follows on /device/consent
     if (!response.nextUrl) {
-      setError("Could not continue the request");
+      setError(tError("noDeviceRequest"));
       return;
     }
 
