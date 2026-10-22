@@ -168,8 +168,6 @@ export function VerifyForm({ userId, loginName, organization, requestId, code, i
         )}
 
         <div className="mt-6 flex w-full flex-col gap-3">
-          
-          
           <Button
             type="submit"
             className="w-full"

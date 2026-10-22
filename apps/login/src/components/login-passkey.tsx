@@ -194,7 +194,6 @@ export function LoginPasskey({ loginName, sessionId, requestId, altPassword, org
         </div>
       )}
       <div className="mt-6 flex w-full flex-col gap-3">
-        
         <Button
           type="submit"
           className="w-full"
@@ -227,7 +226,8 @@ export function LoginPasskey({ loginName, sessionId, requestId, altPassword, org
         >
           {loading && <Spinner className="mr-2 h-5 w-5" />} <Translated i18nKey="verify.submit" namespace="passkey" />
         </Button>
-        <div className="flex justify-start">{altPassword ? (
+        <div className="flex justify-start">
+          {altPassword ? (
           <Button
             type="button"
             variant={ButtonVariants.Secondary}
@@ -261,7 +261,6 @@ export function LoginPasskey({ loginName, sessionId, requestId, altPassword, org
         ) : (
           <BackButton />
         )}
-
         </div>
       </div>
     </div>

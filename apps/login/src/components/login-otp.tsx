@@ -257,8 +257,6 @@ export function LoginOTP({ host, loginName, sessionId, requestId, organization, 
         )}
 
         <div className="mt-6 flex w-full flex-col gap-3">
-          
-          
           <Button
             type="submit"
             className="w-full"

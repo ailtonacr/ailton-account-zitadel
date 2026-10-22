@@ -121,8 +121,6 @@ export function UsernameForm({
           </div>
         )}
         <div className="mt-6 flex w-full flex-col gap-3">
-          
-          
           <Button
             data-testid="submit-button"
             type="submit"

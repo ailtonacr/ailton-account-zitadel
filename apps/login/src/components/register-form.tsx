@@ -185,7 +185,6 @@ export function RegisterForm({
         )}
 
         <div className="mt-6 flex w-full flex-col gap-3">
-          
           <Button
             className="w-full"
             type="submit"

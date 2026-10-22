@@ -94,7 +94,6 @@ export function ConsentScreen({
         
 
         <Button
-          className="w-full"
           onClick={() =>
             run(
               () => approveDeviceAuthorization({ userCode, sessionId, organization }),
@@ -109,7 +108,8 @@ export function ConsentScreen({
           {loading && <Spinner className="mr-2 h-5 w-5" />}
           <Translated i18nKey="request.submit" namespace="device" />
         </Button>
-        <div className="flex justify-center"><Button
+        <div className="flex justify-center">
+          <Button
             className="w-full"
           onClick={() =>
             run(
@@ -122,7 +122,8 @@ export function ConsentScreen({
         >
           {loading && <Spinner className="mr-2 h-5 w-5" />}
           <Translated i18nKey="request.deny" namespace="device" />
-        </Button></div>
+        </Button>
+        </div>
       </div>
     </div>
   );
