@@ -45,9 +45,9 @@ export function LanguageSwitcher({ languages }: { languages: Lang[] }) {
       <Listbox value={selected} onChange={handleChange}>
         <ListboxButton
           className={clsx(
-            `relative block w-full py-1.5 pr-8 pl-3 text-left text-sm/6 text-black dark:text-white ${switcherRoundness}`,
+            `relative block w-full py-1.5 pr-8 pl-3 text-left text-sm/6 text-text-light-500 dark:text-text-dark-500 ${switcherRoundness}`,
             cardAppearance,
-            "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25",
+            "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-primary-light-500 dark:data-[focus]:outline-primary-dark-500",
           )}
         >
           {selected.name}
@@ -68,7 +68,7 @@ export function LanguageSwitcher({ languages }: { languages: Lang[] }) {
               className={`group flex cursor-default items-center gap-2 px-3 py-1.5 select-none data-[focus]:bg-black/10 dark:data-[focus]:bg-white/10 ${switcherRoundness}`}
             >
               <CheckIcon className="invisible size-4 group-data-[selected]:visible" />
-              <div className="text-sm/6 text-black dark:text-white">{lang.name}</div>
+              <div className="text-sm/6 text-text-light-500 dark:text-text-dark-500">{lang.name}</div>
             </ListboxOption>
           ))}
         </ListboxOptions>

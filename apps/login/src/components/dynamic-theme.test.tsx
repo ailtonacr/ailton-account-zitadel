@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
-import { BrandingSettings } from "@zitadel/proto/zitadel/settings/v2/branding_settings_pb";
-import { ReactNode } from "react";
+import type { BrandingSettings } from "@zitadel/proto/zitadel/settings/v2/branding_settings_pb";
+import type { ReactNode } from "react";
 import { describe, expect, it, vi } from "vitest";
 import { DynamicTheme } from "./dynamic-theme";
 
@@ -27,7 +27,7 @@ describe("DynamicTheme — universal presentation", () => {
   });
 
   it("uses the logo configured by ZITADEL branding", () => {
-    const branding = { lightTheme: { logoUrl: "/dynamic-logo.svg" } } as BrandingSettings;
+    const branding = { lightTheme: { logoUrl: "/dynamic-logo.svg" } } as unknown as BrandingSettings;
 
     render(
       <DynamicTheme branding={branding}>
