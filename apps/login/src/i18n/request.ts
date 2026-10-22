@@ -2,7 +2,6 @@ import { LANGS, LANGUAGE_COOKIE_NAME, LANGUAGE_HEADER_NAME } from "@/lib/i18n";
 import { getServiceConfig } from "@/lib/service-url";
 import { getAllowedLanguages, getHostedLoginTranslation } from "@/lib/zitadel";
 import { JsonObject } from "@zitadel/client";
-import deepmerge from "deepmerge";
 import { getRequestConfig } from "next-intl/server";
 import { cookies, headers } from "next/headers";
 
@@ -67,24 +66,10 @@ export default getRequestConfig(async () => {
     console.warn("Error fetching custom translations:", error);
   }
 
-  const customMessages = translations;
-
-  // Load locale messages, fall back to default language messages if locale not found
-  let localeMessages;
-  try {
-    localeMessages = (await import(`../../locales/${locale}.json`)).default;
-  } catch {
-    try {
-      localeMessages = (await import(`../../locales/${defaultLanguage}.json`)).default;
-    } catch {
-      localeMessages = (await import(`../../locales/${fallback}.json`)).default;
-    }
-  }
-
-  const fallbackMessages = (await import(`../../locales/${fallback}.json`)).default;
-
   return {
     locale,
-    messages: deepmerge.all([fallbackMessages, localeMessages, customMessages]) as Record<string, string>,
+    // Hosted Login translations are managed by ZITADEL. Never merge in local
+    // JSON translations, which can mask missing organization/API settings.
+    messages: translations as Record<string, string>,
   };
 });
