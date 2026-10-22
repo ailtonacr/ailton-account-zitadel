@@ -68,7 +68,7 @@ export function UsernameForm({
           suffix,
         });
 
-        handleServerActionResponse(res, router, setSamlData, () => setError(t("errors.internalError")));
+        handleServerActionResponse(res, router, setSamlData, setError);
         return res;
       } catch {
         setError(t("errors.internalError"));
