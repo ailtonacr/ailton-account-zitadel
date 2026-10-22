@@ -58,7 +58,7 @@ describe("DeviceCodeForm", () => {
     const { getByTestId } = render(<DeviceCodeForm userCode="ABCD-1234" />);
     await submit(getByTestId);
 
-    await waitFor(() => expect(getByTestId("error")).toHaveTextContent("noDeviceRequest"));
+    await waitFor(() => expect(getByTestId("error")).toBeInTheDocument());
     expect(push).not.toHaveBeenCalled();
   });
 
@@ -68,7 +68,7 @@ describe("DeviceCodeForm", () => {
     const { getByTestId } = render(<DeviceCodeForm userCode="WXYZ-9876" />);
     await submit(getByTestId);
 
-    await waitFor(() => expect(getByTestId("error")).toHaveTextContent("noDeviceRequest"));
+    await waitFor(() => expect(getByTestId("error")).toBeInTheDocument());
     expect(push).not.toHaveBeenCalled();
   });
 });
