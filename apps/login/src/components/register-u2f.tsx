@@ -7,7 +7,6 @@ import { addU2F, verifyU2F } from "@/lib/server/u2f";
 import { LoginSettings } from "@zitadel/proto/zitadel/settings/v2/login_settings_pb";
 import { RegisterU2FResponse } from "@zitadel/proto/zitadel/user/v2/user_service_pb";
 import { useRouter } from "next/navigation";
-import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { Alert } from "./alert";
 import { AutoSubmitForm } from "./auto-submit-form";
@@ -32,8 +31,6 @@ export function RegisterU2f({ loginName, sessionId, organization, requestId, che
   const [loading, setLoading] = useState<boolean>(false);
 
   const router = useRouter();
-  const tPasskey = useTranslations("passkey");
-  const tZitadel = useTranslations("zitadel");
 
   async function submitVerify(u2fId: string, passkeyName: string, publicKeyCredential: any, sessionId: string) {
     setError("");
@@ -45,7 +42,7 @@ export function RegisterU2f({ loginName, sessionId, organization, requestId, che
       sessionId,
     })
       .catch(() => {
-        setError(tPasskey("verify.errors.couldNotVerifyPasskey"));
+        setError("An error on verifying passkey occurred");
         return;
       })
       .finally(() => {
@@ -67,7 +64,7 @@ export function RegisterU2f({ loginName, sessionId, organization, requestId, che
       sessionId,
     })
       .catch(() => {
-        setError(response?.error);
+        setError("An error on registering passkey");
         return;
       })
       .finally(() => {
@@ -80,7 +77,7 @@ export function RegisterU2f({ loginName, sessionId, organization, requestId, che
     }
 
     if (!response || !("u2fId" in response)) {
-      setError(response?.error);
+      setError("An error on registering passkey");
       return;
     }
 
@@ -108,7 +105,7 @@ export function RegisterU2f({ loginName, sessionId, organization, requestId, che
         !(resp as any).response.clientDataJSON ||
         !(resp as any).rawId
       ) {
-        setError(response?.error);
+        setError("An error on registering passkey");
         return;
       }
 
@@ -129,7 +126,7 @@ export function RegisterU2f({ loginName, sessionId, organization, requestId, che
       const submitResponse = await submitVerify(u2fId, "", data, sessionId);
 
       if (!submitResponse) {
-        setError(tPasskey("verify.errors.couldNotVerifyPasskey"));
+        setError("An error on verifying passkey");
         return;
       }
 
