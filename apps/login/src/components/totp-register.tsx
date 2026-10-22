@@ -77,7 +77,7 @@ export function TotpRegister({ uri, loginName, sessionId, requestId, organizatio
               loginSettings?.defaultRedirectUri,
             );
 
-            handleServerActionResponse(callbackResponse, router, setSamlData, () => setError(t("errors.couldNotVerifyCode")));
+            handleServerActionResponse(callbackResponse, router, setSamlData, setError);
           } else if (loginName) {
             const callbackResponse = await completeFlowOrGetUrl(
               {
@@ -87,7 +87,7 @@ export function TotpRegister({ uri, loginName, sessionId, requestId, organizatio
               loginSettings?.defaultRedirectUri,
             );
 
-            handleServerActionResponse(callbackResponse, router, setSamlData, () => setError(t("errors.couldNotVerifyCode")));
+            handleServerActionResponse(callbackResponse, router, setSamlData, setError);
           }
         }
       })
