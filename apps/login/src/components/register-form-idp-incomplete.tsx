@@ -59,7 +59,6 @@ export function RegisterFormIDPIncomplete({
   });
 
   const t = useTranslations("register");
-  const loginNameTranslations = useTranslations("loginname");
   const router = useRouter();
 
   const [loading, setLoading] = useState<boolean>(false);
@@ -83,7 +82,7 @@ export function RegisterFormIDPIncomplete({
 
       handleServerActionResponse(response, router, setSamlData, setError);
     } catch {
-      setError(t("errors.couldNotRegisterUser"));
+      setError("Could not register user");
     } finally {
       setLoading(false);
     }
@@ -103,8 +102,8 @@ export function RegisterFormIDPIncomplete({
                 autoComplete="username"
                 autoFocus
                 required
-                {...register("username", { required: loginNameTranslations("required.loginName") })}
-                label={loginNameTranslations("labels.username")}
+                {...register("username", { required: "Username is required" })}
+                label={"Username"}
                 error={errors.username?.message as string}
                 data-testid="username-text-input"
               />
