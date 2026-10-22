@@ -53,7 +53,7 @@ export function RegisterU2f({ loginName, sessionId, organization, requestId, che
       });
 
     if (response && "error" in response && response?.error) {
-      setError(tZitadel("errors.errorOccured"));
+      setError(response?.error);
       return;
     }
 
@@ -67,7 +67,7 @@ export function RegisterU2f({ loginName, sessionId, organization, requestId, che
       sessionId,
     })
       .catch(() => {
-        setError(tZitadel("errors.errorOccured"));
+        setError(response?.error);
         return;
       })
       .finally(() => {
@@ -75,12 +75,12 @@ export function RegisterU2f({ loginName, sessionId, organization, requestId, che
       });
 
     if (response && "error" in response && response?.error) {
-      setError(tZitadel("errors.errorOccured"));
+      setError(response?.error);
       return;
     }
 
     if (!response || !("u2fId" in response)) {
-      setError(tZitadel("errors.errorOccured"));
+      setError(response?.error);
       return;
     }
 
@@ -108,7 +108,7 @@ export function RegisterU2f({ loginName, sessionId, organization, requestId, che
         !(resp as any).response.clientDataJSON ||
         !(resp as any).rawId
       ) {
-        setError(tZitadel("errors.errorOccured"));
+        setError(response?.error);
         return;
       }
 
@@ -161,7 +161,7 @@ export function RegisterU2f({ loginName, sessionId, organization, requestId, che
             loginSettings?.defaultRedirectUri,
           );
 
-          handleServerActionResponse(callbackResponse, router, setSamlData, () => setError(tZitadel("errors.errorOccured")));
+          handleServerActionResponse(callbackResponse, router, setSamlData, setError);
         } else if (loginName) {
           const callbackResponse = await completeFlowOrGetUrl(
             {
@@ -171,7 +171,7 @@ export function RegisterU2f({ loginName, sessionId, organization, requestId, che
             loginSettings?.defaultRedirectUri,
           );
 
-          handleServerActionResponse(callbackResponse, router, setSamlData, () => setError(tZitadel("errors.errorOccured")));
+          handleServerActionResponse(callbackResponse, router, setSamlData, setError);
         }
       }
     }
