@@ -29,7 +29,7 @@ export function DynamicTheme({
   const childArray = Children.toArray(actualChildren);
   const hasSections = childArray.length > 1;
   const heading = childArray[0] ?? null;
-  const form = hasSections ? childArray[1] : heading;
+  const form = hasSections ? childArray.slice(1) : heading;
   const hasLogo = !!(branding?.lightTheme?.logoUrl || branding?.darkTheme?.logoUrl);
 
   const logo = hasLogo ? (
