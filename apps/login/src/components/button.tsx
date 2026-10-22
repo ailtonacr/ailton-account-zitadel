@@ -35,7 +35,7 @@ export const getButtonClasses = (
 ) =>
   clsx(
     {
-      "box-border leading-36px text-14px inline-flex items-center focus:outline-none transition-colors transition-shadow duration-300": true,
+      "box-border inline-flex min-h-12 items-center justify-center text-sm font-medium leading-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-light-500 focus-visible:ring-offset-2 dark:focus-visible:ring-primary-dark-500 dark:focus-visible:ring-offset-background-dark-500 transition-colors duration-150": true,
       "disabled:border-none disabled:bg-gray-300 disabled:text-gray-600 disabled:shadow-none disabled:cursor-not-allowed disabled:dark:bg-gray-700 disabled:dark:text-gray-900":
         variant === ButtonVariants.Primary,
       "bg-primary-light-500 dark:bg-primary-dark-500 hover:bg-primary-light-400 hover:dark:bg-primary-dark-400 text-primary-light-contrast-500 dark:text-primary-dark-contrast-500":
@@ -46,8 +46,8 @@ export const getButtonClasses = (
         variant === ButtonVariants.Secondary,
       "border border-button-light-border dark:border-button-dark-border text-warn-light-500 dark:text-warn-dark-500 hover:bg-warn-light-500/10 dark:hover:bg-warn-light-500/10 focus:bg-warn-light-500/20 dark:focus:bg-warn-light-500/20":
         color === ButtonColors.Warn && variant !== ButtonVariants.Primary,
-      "px-16 py-2": size === ButtonSizes.Large,
-      "px-4 h-[36px]": size === ButtonSizes.Small,
+      "px-8 py-3": size === ButtonSizes.Large,
+      "px-5 py-3": size === ButtonSizes.Small,
     },
     roundnessClasses, // Apply the full roundness classes directly
     appearance, // Apply appearance-specific styling (shadows, borders, etc.)

@@ -5,7 +5,7 @@
 @layer base {
   h1,
   .ztdl-h1 {
-    @apply text-center text-2xl;
+    @apply text-left text-2xl font-semibold leading-tight tracking-tight;
   }
 
   .ztdl-p {

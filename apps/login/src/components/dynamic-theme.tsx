@@ -8,16 +8,8 @@ import { Card } from "./card";
 import { ThemeWrapper } from "./theme-wrapper";
 
 /**
- * DynamicTheme component handles layout switching between traditional top-to-bottom
- * and modern side-by-side layouts based on NEXT_PUBLIC_THEME_LAYOUT.
- *
- * For side-by-side layout:
- * - First child: Goes to left side (title, description, etc.)
- * - Second child: Goes to right side (forms, buttons, etc.)
- * - Single child: Falls back to right side for backward compatibility
- *
- * For top-to-bottom layout:
- * - All children rendered in traditional centered layout
+ * Presentation-only layout. Branding, translated copy, authentication methods
+ * and flow contents continue to come from the ZITADEL configuration.
  */
 export function DynamicTheme({
   branding,
@@ -27,8 +19,6 @@ export function DynamicTheme({
   branding?: BrandingSettings;
 }) {
   const { isSideBySide } = useResponsiveLayout();
-
-  // Resolve children immediately to avoid passing functions through React
   const actualChildren: ReactNode = React.useMemo(() => {
     if (typeof children === "function") {
       return (children as (isSideBySide: boolean) => ReactNode)(isSideBySide);
@@ -36,99 +26,52 @@ export function DynamicTheme({
     return children;
   }, [children, isSideBySide]);
 
+  const childArray = Children.toArray(actualChildren);
+  const hasSections = childArray.length > 1;
+  const heading = childArray[0] ?? null;
+  const form = hasSections ? childArray[1] : heading;
+  const hasLogo = !!(branding?.lightTheme?.logoUrl || branding?.darkTheme?.logoUrl);
+
+  const logo = hasLogo ? (
+    <Logo
+      lightSrc={branding?.lightTheme?.logoUrl}
+      darkSrc={branding?.darkTheme?.logoUrl}
+      height={44}
+      width={148}
+    />
+  ) : null;
+
   return (
     <ThemeWrapper branding={branding}>
-      {isSideBySide
-        ? // Side-by-side layout: first child goes left, second child goes right
-          (() => {
-            const childArray = Children.toArray(actualChildren);
-            const leftContent = childArray[0] || null;
-            const rightContent = childArray[1] || null;
-
-            // If there's only one child, it's likely the old format - keep it on the right side
-            const hasLeftRightStructure = childArray.length === 2;
-
-            return (
-              <div className="relative mx-auto w-full max-w-[1100px] px-8 py-4">
-                <Card>
-                  <div className="flex min-h-[400px]">
-                    {/* Left side: First child + branding */}
-                    <div className="from-primary-50 to-primary-100 dark:from-primary-900/20 dark:to-primary-800/20 flex w-1/2 flex-col justify-center bg-gradient-to-br p-4 lg:p-8">
-                      <div className="mx-auto max-w-[440px] space-y-8">
-                        {/* Logo and branding */}
-                        {branding && (
-                          <Logo
-                            lightSrc={branding.lightTheme?.logoUrl}
-                            darkSrc={branding.darkTheme?.logoUrl}
-                            height={150}
-                            width={150}
-                          />
-                        )}
-
-                        {/* First child content (title, description) - only if we have left/right structure */}
-                        {hasLeftRightStructure && (
-                          <div className="flex flex-col items-start space-y-4 text-left">
-                            {/* Apply larger styling to the content */}
-                            <div className="space-y-6 [&_h1]:text-left [&_h1]:text-4xl [&_h1]:leading-tight [&_h1]:text-gray-900 [&_h1]:lg:text-4xl [&_h1]:dark:text-white [&_p]:text-left [&_p]:leading-relaxed [&_p]:text-gray-700 [&_p]:dark:text-gray-300">
-                              {leftContent}
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-
-                    {/* Right side: Second child (form) or single child if old format */}
-                    <div className="flex w-1/2 items-center justify-center p-4 lg:p-8">
-                      <div className="w-full max-w-[440px]">
-                        <div className="space-y-6">{hasLeftRightStructure ? rightContent : leftContent}</div>
-                      </div>
-                    </div>
-                  </div>
-                </Card>
+      {isSideBySide ? (
+        <div className="mx-auto w-full max-w-[960px] px-4 py-4 sm:px-6">
+          <Card className="w-full overflow-hidden" padding="px-6 py-8 sm:px-10 sm:py-12">
+            <div className="grid min-w-0 gap-8 md:grid-cols-2 md:gap-12">
+              <div className="flex min-w-0 flex-col justify-center gap-8">
+                {hasLogo && <div className="flex justify-start">{logo}</div>}
+                {hasSections && <div className="w-full space-y-3 text-left">{heading}</div>}
               </div>
-            );
-          })()
-        : // Traditional top-to-bottom layout - center title/description, left-align forms
-          (() => {
-            const childArray = Children.toArray(actualChildren);
-            const titleContent = childArray[0] || null;
-            const formContent = childArray[1] || null;
-            const hasMultipleChildren = childArray.length > 1;
-
-            return (
-              <div className="relative mx-auto w-full max-w-[440px] px-4 py-4">
-                <Card>
-                  <div className="mx-auto flex flex-col items-center space-y-8">
-                    <div className="relative flex flex-row items-center justify-center">
-                      {branding && (
-                        <Logo
-                          lightSrc={branding.lightTheme?.logoUrl}
-                          darkSrc={branding.darkTheme?.logoUrl}
-                          height={150}
-                          width={150}
-                        />
-                      )}
-                    </div>
-
-                    {hasMultipleChildren ? (
-                      <>
-                        {/* Title and description - center aligned */}
-                        <div className="mb-4 flex w-full flex-col items-center text-center">{titleContent}</div>
-
-                        {/* Form content - left aligned */}
-                        <div className="w-full">{formContent}</div>
-                      </>
-                    ) : (
-                      // Single child - use original behavior
-                      <div className="w-full">{actualChildren}</div>
-                    )}
-
-                    <div className="flex flex-row justify-between"></div>
-                  </div>
-                </Card>
-              </div>
-            );
-          })()}
+              <div className="flex min-w-0 flex-col justify-center">{form}</div>
+            </div>
+          </Card>
+        </div>
+      ) : (
+        <div className="mx-auto w-full max-w-[480px] px-4 py-4 sm:px-6">
+          {hasLogo && <div className="mb-7 flex justify-center">{logo}</div>}
+          <Card className="w-full" padding="px-6 py-8 sm:px-9 sm:py-10">
+            <div className="flex w-full min-w-0 flex-col gap-7">
+              {hasSections ? (
+                <>
+                  <div className="w-full space-y-3 text-left">{heading}</div>
+                  <div className="w-full">{form}</div>
+                </>
+              ) : (
+                <div className="w-full">{actualChildren}</div>
+              )}
+            </div>
+          </Card>
+        </div>
+      )}
     </ThemeWrapper>
   );
 }
