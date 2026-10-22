@@ -19,7 +19,7 @@ describe("UsernameForm", () => {
 
   test("should autofocus the loginName input on mount", () => {
     const { getByTestId } = render(
-      <UsernameForm loginName="" requestId={undefined} loginSettings={undefined} submit={false} />,
+      <UsernameForm loginName="" requestId={undefined} loginSettings={undefined} submit={false} allowRegister={false} />,
     );
     expect(getByTestId("username-text-input")).toHaveFocus();
   });
