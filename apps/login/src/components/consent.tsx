@@ -46,8 +46,8 @@ export function ConsentScreen({
   const scopes = scope?.filter((s) => !!s);
 
   return (
-    <div className="flex w-full flex-col items-center space-y-4 pt-4">
-      <ul className="w-full list-disc space-y-2">
+    <div className="flex w-full flex-col items-stretch gap-4 pt-2">
+      <ul className="w-full list-none space-y-2">
         {scopes?.length === 0 && (
           <span className="border-divider-light bg-background-light-400 dark:bg-background-dark-400 flex w-full flex-row items-center rounded-md border px-4 py-2 text-sm transition-all">
             <Translated i18nKey="scope.openid" namespace="device" />
@@ -89,8 +89,28 @@ export function ConsentScreen({
         </div>
       )}
 
-      <div className="mt-4 flex w-full flex-row items-center">
+      <div className="mt-4 flex w-full flex-col gap-3">
+        
+        
+
         <Button
+          className="w-full"
+          onClick={() =>
+            run(
+              () => approveDeviceAuthorization({ userCode, sessionId, organization }),
+              (response) => response.redirect && router.push(response.redirect),
+            )
+          }
+          disabled={loading}
+          data-testid="submit-button"
+          className="w-full"
+          variant={ButtonVariants.Primary}
+        >
+          {loading && <Spinner className="mr-2 h-5 w-5" />}
+          <Translated i18nKey="request.submit" namespace="device" />
+        </Button>
+        <div className="flex justify-center"><Button
+            className="w-full"
           onClick={() =>
             run(
               () => denyDeviceAuthorization({ userCode, sessionId, organization }),
@@ -102,24 +122,7 @@ export function ConsentScreen({
         >
           {loading && <Spinner className="mr-2 h-5 w-5" />}
           <Translated i18nKey="request.deny" namespace="device" />
-        </Button>
-        <span className="flex-grow"></span>
-
-        <Button
-          onClick={() =>
-            run(
-              () => approveDeviceAuthorization({ userCode, sessionId, organization }),
-              (response) => response.redirect && router.push(response.redirect),
-            )
-          }
-          disabled={loading}
-          data-testid="submit-button"
-          className="self-end"
-          variant={ButtonVariants.Primary}
-        >
-          {loading && <Spinner className="mr-2 h-5 w-5" />}
-          <Translated i18nKey="request.submit" namespace="device" />
-        </Button>
+        </Button></div>
       </div>
     </div>
   );

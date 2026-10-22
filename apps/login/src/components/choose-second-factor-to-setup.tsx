@@ -63,7 +63,7 @@ export function ChooseSecondFactorToSetup({
   return (
     <>
       {samlData && <AutoSubmitForm url={samlData.url} fields={samlData.fields} />}
-      <div className="grid w-full grid-cols-1 gap-5 pt-4">
+      <div className="grid w-full grid-cols-1 gap-3 pt-3">
         {loginSettings.secondFactors.map((factor) => {
           switch (factor) {
             case SecondFactorType.OTP:
