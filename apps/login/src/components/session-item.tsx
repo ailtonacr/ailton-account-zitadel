@@ -49,7 +49,7 @@ export function SessionItem({ session, reload, requestId }: { session: Session; 
     try {
       const response = await clearSession({ sessionId: id });
       if (response && "error" in response && response.error) {
-        setError(response.error);
+        setError(t("couldNotClearSession"));
         return false;
       }
       return true;
@@ -83,7 +83,7 @@ export function SessionItem({ session, reload, requestId }: { session: Session; 
 
                 const callbackResponse = await continueWithSession(sessionPayload);
 
-                handleServerActionResponse(callbackResponse, router, setSamlData, (e) => setError(e));
+                handleServerActionResponse(callbackResponse, router, setSamlData, () => setError(t("failedLoading")));
               } else if (session.factors?.user) {
                 setLoading(true);
                 try {
@@ -93,7 +93,7 @@ export function SessionItem({ session, reload, requestId }: { session: Session; 
                     requestId: requestId,
                   });
 
-                  handleServerActionResponse(res, router, setSamlData, (e) => setError(e));
+                  handleServerActionResponse(res, router, setSamlData, () => setError(t("failedLoading")));
                 } catch {
                   setError(t("failedLoading"));
                 } finally {

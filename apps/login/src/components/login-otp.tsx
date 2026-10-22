@@ -98,7 +98,7 @@ export function LoginOTP({ host, loginName, sessionId, requestId, organization, 
     }
 
     if (response && "error" in response && response.error) {
-      return { error: response.error };
+      return { error: t("errors.couldNotRequestChallenge") };
     }
 
     return response;
@@ -111,7 +111,7 @@ export function LoginOTP({ host, loginName, sessionId, requestId, organization, 
       updateSessionForOTPChallenge()
         .then((response) => {
           if (response?.error) {
-            setError(response.error);
+            setError(t("errors.couldNotVerifyCode"));
           }
         })
         .finally(() => {
@@ -170,7 +170,7 @@ export function LoginOTP({ host, loginName, sessionId, requestId, organization, 
       });
 
     if (response && "error" in response && response.error) {
-      setError(response.error);
+      setError(t("errors.couldNotVerifyCode"));
       return;
     }
 
@@ -201,7 +201,7 @@ export function LoginOTP({ host, loginName, sessionId, requestId, organization, 
           );
           setLoading(false);
 
-          handleServerActionResponse(callbackResponse, router, setSamlData, setError);
+          handleServerActionResponse(callbackResponse, router, setSamlData, () => setError(t("errors.couldNotVerifyCode")));
         } else {
           setLoading(false);
         }
@@ -228,7 +228,7 @@ export function LoginOTP({ host, loginName, sessionId, requestId, organization, 
                   setLoading(true);
                   const response = await updateSessionForOTPChallenge();
                   if (response?.error) {
-                    setError(response.error);
+                    setError(t("errors.couldNotVerifyCode"));
                   }
                   setLoading(false);
                 }}

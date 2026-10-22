@@ -199,7 +199,7 @@ export function RegisterPasskey({
     }
 
     continueAndLogin(verificationResponse.loginName);
-  }, [sessionId, userId, code, codeId, continueAndLogin]);
+  }, [sessionId, userId, code, codeId, continueAndLogin, tError, tPasskey, tZitadel]);
 
   // Auto-submit when code is provided (similar to VerifyForm)
   useEffect(() => {

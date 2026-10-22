@@ -23,7 +23,9 @@ export function AutoSubmitForm({ url, fields }: Props) {
         <input key={key} type="hidden" name={key} value={value} />
       ))}
       <noscript>
-        <button type="submit"><Translated i18nKey="submit" namespace="loginname" /></button>
+        <button type="submit">
+          <Translated i18nKey="submit" namespace="loginname" />
+        </button>
       </noscript>
     </form>
   );

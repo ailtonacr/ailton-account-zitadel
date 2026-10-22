@@ -161,7 +161,7 @@ export function RegisterU2f({ loginName, sessionId, organization, requestId, che
             loginSettings?.defaultRedirectUri,
           );
 
-          handleServerActionResponse(callbackResponse, router, setSamlData, setError);
+          handleServerActionResponse(callbackResponse, router, setSamlData, () => setError(tZitadel("errors.errorOccured")));
         } else if (loginName) {
           const callbackResponse = await completeFlowOrGetUrl(
             {
@@ -171,7 +171,7 @@ export function RegisterU2f({ loginName, sessionId, organization, requestId, che
             loginSettings?.defaultRedirectUri,
           );
 
-          handleServerActionResponse(callbackResponse, router, setSamlData, setError);
+          handleServerActionResponse(callbackResponse, router, setSamlData, () => setError(tZitadel("errors.errorOccured")));
         }
       }
     }

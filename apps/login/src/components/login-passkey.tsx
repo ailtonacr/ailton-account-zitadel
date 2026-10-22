@@ -100,7 +100,7 @@ export function LoginPasskey({ loginName, sessionId, requestId, altPassword, org
       });
 
     if (sessionResponse && "error" in sessionResponse && sessionResponse.error) {
-      setError(sessionResponse.error);
+      setError(t("verify.errors.couldNotRequestChallenge"));
       return;
     }
 
@@ -120,7 +120,7 @@ export function LoginPasskey({ loginName, sessionId, requestId, altPassword, org
         requestId,
       });
 
-      const handled = handleServerActionResponse(response, router, setSamlData, setError);
+      const handled = handleServerActionResponse(response, router, setSamlData, () => setError(t("verify.errors.verificationFailed")));
 
       if (!handled) {
         if (!response) {
