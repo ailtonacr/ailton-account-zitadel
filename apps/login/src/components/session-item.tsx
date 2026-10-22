@@ -83,7 +83,7 @@ export function SessionItem({ session, reload, requestId }: { session: Session; 
 
                 const callbackResponse = await continueWithSession(sessionPayload);
 
-                handleServerActionResponse(callbackResponse, router, setSamlData, () => setError(t("failedLoading")));
+                handleServerActionResponse(callbackResponse, router, setSamlData, (e) => setError(e));
               } else if (session.factors?.user) {
                 setLoading(true);
                 try {
@@ -93,9 +93,9 @@ export function SessionItem({ session, reload, requestId }: { session: Session; 
                     requestId: requestId,
                   });
 
-                  handleServerActionResponse(res, router, setSamlData, () => setError(t("failedLoading")));
+                  handleServerActionResponse(res, router, setSamlData, (e) => setError(e));
                 } catch {
-                  setError(t("failedLoading"));
+                  setError("An internal error occurred");
                 } finally {
                   setLoading(false);
                 }
@@ -156,9 +156,7 @@ export function SessionItem({ session, reload, requestId }: { session: Session; 
               className="bg-background-light-500 dark:bg-background-dark-500 z-50 rounded-md border border-divider-light px-3 py-2 text-xs text-text-light-500 shadow-xl select-none dark:border-divider-dark dark:text-text-dark-500"
               sideOffset={5}
             >
-              <time dateTime={timestampDate(session.expirationDate).toISOString()}>
-                {moment(timestampDate(session.expirationDate)).fromNow()}
-              </time>
+              Expires {moment(timestampDate(session.expirationDate)).fromNow()}
               <Tooltip.Arrow className="fill-white dark:fill-white/20" />
             </Tooltip.Content>
           </Tooltip.Portal>
