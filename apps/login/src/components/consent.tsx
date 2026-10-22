@@ -93,6 +93,20 @@ export function ConsentScreen({
         <Button
           onClick={() =>
             run(
+              () => denyDeviceAuthorization({ userCode, sessionId, organization }),
+              (response) => router.push(response.redirect ?? "/device"),
+            )
+          }
+          className="w-full"
+          variant={ButtonVariants.Secondary}
+          data-testid="deny-button"
+        >
+          {loading && <Spinner className="mr-2 h-5 w-5" />}
+          <Translated i18nKey="request.deny" namespace="device" />
+        </Button>
+        <Button
+          onClick={() =>
+            run(
               () => approveDeviceAuthorization({ userCode, sessionId, organization }),
               (response) => response.redirect && router.push(response.redirect),
             )
@@ -105,22 +119,6 @@ export function ConsentScreen({
           {loading && <Spinner className="mr-2 h-5 w-5" />}
           <Translated i18nKey="request.submit" namespace="device" />
         </Button>
-        <div className="flex justify-center">
-          <Button
-            className="w-full"
-            onClick={() =>
-            run(
-              () => denyDeviceAuthorization({ userCode, sessionId, organization }),
-              (response) => router.push(response.redirect ?? "/device"),
-            )
-          }
-            variant={ButtonVariants.Secondary}
-            data-testid="deny-button"
-          >
-          {loading && <Spinner className="mr-2 h-5 w-5" />}
-          <Translated i18nKey="request.deny" namespace="device" />
-        </Button>
-        </div>
       </div>
     </div>
   );
