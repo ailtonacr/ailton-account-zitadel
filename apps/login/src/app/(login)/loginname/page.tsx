@@ -6,6 +6,7 @@ import { getServiceConfig } from "@/lib/service-url";
 import { getActiveIdentityProviders, getBrandingSettings, getDefaultOrg, getLoginSettings } from "@/lib/zitadel";
 import { Organization } from "@zitadel/proto/zitadel/org/v2/org_pb";
 import { Metadata } from "next";
+import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { headers } from "next/headers";
 
@@ -50,6 +51,10 @@ export default async function Page(props: { searchParams: Promise<Record<string 
 
   const branding = await getBrandingSettings({ serviceConfig, organization: organization ?? defaultOrganization });
 
+  const registerParams = new URLSearchParams();
+  if (organization) registerParams.set("organization", organization);
+  if (requestId) registerParams.set("requestId", requestId);
+
   return (
     <DynamicTheme branding={branding}>
       <div className="flex flex-col space-y-4">
@@ -72,12 +77,11 @@ export default async function Page(props: { searchParams: Promise<Record<string 
             suffix={orgDomain}
             hideSuffix={branding?.hideLoginNameSuffix}
             submit={submit}
-            allowRegister={!!loginSettings?.allowRegister}
           ></UsernameForm>
         )}
 
         {loginSettings?.allowExternalIdp && !!identityProviders?.length && (
-          <div className="w-full pt-6 pb-4">
+          <div className="w-full pt-5 pb-1">
             <SignInWithIdp
               identityProviders={identityProviders}
               requestId={requestId}
@@ -86,6 +90,17 @@ export default async function Page(props: { searchParams: Promise<Record<string 
               loginHint={idpLoginHint}
               showLabel={loginSettings?.allowLocalAuthentication}
             ></SignInWithIdp>
+          </div>
+        )}
+        {loginSettings?.allowLocalAuthentication && loginSettings.allowRegister && (
+          <div className="mt-6 flex justify-center">
+            <Link
+              href={"/register?" + registerParams.toString()}
+              data-testid="register-button"
+              className="text-primary-light-500 dark:text-primary-dark-500 text-sm font-medium underline-offset-4 hover:underline focus-visible:outline-none focus-visible:underline"
+            >
+              <Translated i18nKey="register" namespace="loginname" />
+            </Link>
           </div>
         )}
       </div>

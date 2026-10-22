@@ -117,7 +117,7 @@ export function RegisterForm({
     <>
       {samlData && <AutoSubmitForm url={samlData.url} fields={samlData.fields} />}
       <form className="w-full">
-        <div className="mb-4 grid grid-cols-2 gap-4">
+        <div className="mb-4 grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
           <div className="">
             <TextInput
               type="firstname"
@@ -141,7 +141,7 @@ export function RegisterForm({
               data-testid="lastname-text-input"
             />
           </div>
-          <div className="col-span-2">
+          <div className="sm:col-span-2">
             <TextInput
               type="email"
               autoComplete="email"
@@ -184,9 +184,10 @@ export function RegisterForm({
           </div>
         )}
 
-        <div className="mt-8 flex w-full flex-row items-center justify-between">
-          <BackButton data-testid="back-button" />
+        <div className="mt-6 flex w-full flex-col gap-3">
+          
           <Button
+            className="w-full"
             type="submit"
             variant={ButtonVariants.Primary}
             disabled={loading || !canSubmit}
@@ -203,6 +204,9 @@ export function RegisterForm({
             {loading && <Spinner className="mr-2 h-5 w-5" />}
             <Translated i18nKey="submit" namespace="register" />
           </Button>
+          <div className="flex justify-start">
+            <BackButton data-testid="back-button" />
+          </div>
         </div>
       </form>
     </>

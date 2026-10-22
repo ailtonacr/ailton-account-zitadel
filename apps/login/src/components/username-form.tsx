@@ -28,7 +28,6 @@ type Props = {
   suffix?: string;
   hideSuffix?: boolean;
   submit: boolean;
-  allowRegister: boolean;
 };
 
 export function UsernameForm({
@@ -40,7 +39,6 @@ export function UsernameForm({
   hideSuffix,
   loginSettings,
   submit,
-  allowRegister,
 }: Props) {
   const { register, handleSubmit, formState } = useForm<Inputs>({
     mode: "onChange",
@@ -114,27 +112,7 @@ export function UsernameForm({
             data-testid="username-text-input"
             suffix={hideSuffix ? undefined : suffix}
           />
-          {allowRegister && (
-            <button
-              className="hover:text-primary-light-500 dark:hover:text-primary-dark-500 text-sm transition-all"
-              onClick={() => {
-                const registerParams = new URLSearchParams();
-                if (organization) {
-                  registerParams.append("organization", organization);
-                }
-                if (requestId) {
-                  registerParams.append("requestId", requestId);
-                }
 
-                router.push("/register?" + registerParams);
-              }}
-              type="button"
-              disabled={loading}
-              data-testid="register-button"
-            >
-              <Translated i18nKey="register" namespace="loginname" />
-            </button>
-          )}
         </div>
 
         {error && (
@@ -142,13 +120,13 @@ export function UsernameForm({
             <Alert>{error}</Alert>
           </div>
         )}
-        <div className="mt-4 flex w-full flex-row items-center">
-          <BackButton data-testid="back-button" />
-          <span className="flex-grow"></span>
+        <div className="mt-6 flex w-full flex-col gap-3">
+          
+          
           <Button
             data-testid="submit-button"
             type="submit"
-            className="self-end"
+            className="w-full"
             variant={ButtonVariants.Primary}
             disabled={loading || !formState.isValid}
             onClick={handleSubmit((e) => submitLoginName(e, organization))}
@@ -156,6 +134,9 @@ export function UsernameForm({
             {loading && <Spinner className="mr-2 h-5 w-5" />}
             <Translated i18nKey="submit" namespace="loginname" />
           </Button>
+          <div className="flex justify-start">
+            <BackButton data-testid="back-button" />
+          </div>
         </div>
       </form>
     </>
