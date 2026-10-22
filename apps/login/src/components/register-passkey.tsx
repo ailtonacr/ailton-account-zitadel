@@ -3,7 +3,6 @@
 import { coerceToArrayBuffer, coerceToBase64Url } from "@/helpers/base64";
 import { registerPasskeyLink, verifyPasskeyRegistration } from "@/lib/server/passkeys";
 import { useRouter } from "next/navigation";
-import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Alert } from "./alert";
@@ -44,9 +43,6 @@ export function RegisterPasskey({
   const [loading, setLoading] = useState<boolean>(false);
 
   const router = useRouter();
-  const tPasskey = useTranslations("passkey");
-  const tError = useTranslations("error");
-  const tZitadel = useTranslations("zitadel");
 
   const continueAndLogin = useCallback(
     (loginName?: string) => {
@@ -77,7 +73,7 @@ export function RegisterPasskey({
     [organization, requestId, sessionId, userId, initialLoginName, router],
   );
 
-  const submitVerify = useCallback(async function submitVerify(
+  async function submitVerify(
     passkeyId: string,
     passkeyName: string,
     publicKeyCredential: any,
@@ -93,7 +89,7 @@ export function RegisterPasskey({
       userId: currentUserId,
     })
       .catch(() => {
-        setError(tPasskey("verify.errors.couldNotVerifyPasskey"));
+        setError("Could not verify Passkey");
         return;
       })
       .finally(() => {
@@ -101,12 +97,12 @@ export function RegisterPasskey({
       });
 
     return response;
-  }, [tPasskey]);
+  }
 
   const submitRegisterAndContinue = useCallback(async (): Promise<boolean | void> => {
     // Require either sessionId or userId
     if (!sessionId && !userId) {
-      setError(tError("couldNotContinueSession"));
+      setError("Missing session or user information");
       return;
     }
 
@@ -119,14 +115,14 @@ export function RegisterPasskey({
     } else if (userId && code && codeId) {
       regReq = { userId, code, codeId };
     } else {
-      setError(tError("couldNotContinueSession"));
+      setError("Missing code for user-based registration");
       setLoading(false);
       return;
     }
 
     const resp = await registerPasskeyLink(regReq)
       .catch(() => {
-        setError(tZitadel("errors.errorOccured"));
+        setError("Could not register passkey");
         return;
       })
       .finally(() => {
@@ -134,17 +130,17 @@ export function RegisterPasskey({
       });
 
     if (!resp) {
-      setError(tZitadel("errors.errorOccured"));
+      setError("An error on registering passkey");
       return;
     }
 
     if ("error" in resp && resp.error) {
-      setError(tZitadel("errors.errorOccured"));
+      setError(resp.error);
       return;
     }
 
     if (!("passkeyId" in resp)) {
-      setError(tZitadel("errors.errorOccured"));
+      setError("An error on registering passkey");
       return;
     }
 
@@ -152,7 +148,7 @@ export function RegisterPasskey({
     const options: CredentialCreationOptions = (resp.publicKeyCredentialCreationOptions as CredentialCreationOptions) ?? {};
 
     if (!options.publicKey) {
-      setError(tZitadel("errors.errorOccured"));
+      setError("An error on registering passkey");
       return;
     }
 
@@ -173,7 +169,7 @@ export function RegisterPasskey({
       !(credentials as any).response?.clientDataJSON ||
       !(credentials as any).rawId
     ) {
-      setError(tZitadel("errors.errorOccured"));
+      setError("An error on registering passkey");
       return;
     }
 
@@ -194,12 +190,12 @@ export function RegisterPasskey({
     const verificationResponse = await submitVerify(passkeyId, "", data, sessionId, userId);
 
     if (!verificationResponse) {
-      setError(tPasskey("verify.errors.couldNotVerifyPasskey"));
+      setError("Could not verify Passkey!");
       return;
     }
 
     continueAndLogin(verificationResponse.loginName);
-  }, [sessionId, userId, code, codeId, continueAndLogin, submitVerify, tError, tPasskey, tZitadel]);
+  }, [sessionId, userId, code, codeId, continueAndLogin]);
 
   // Auto-submit when code is provided (similar to VerifyForm)
   useEffect(() => {
