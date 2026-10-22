@@ -151,9 +151,9 @@ export function SetRegisterPasswordForm({
 
         {error && <Alert>{error}</Alert>}
 
-        <div className="mt-8 flex w-full flex-row items-center justify-between">
-          <BackButton data-testid="back-button" />
+        <div className="mt-6 flex w-full flex-col gap-3">
           <Button
+            className="w-full"
             type="submit"
             variant={ButtonVariants.Primary}
             disabled={loading || !policyIsValid || !formState.isValid || watchPassword !== watchConfirmPassword}
@@ -162,6 +162,9 @@ export function SetRegisterPasswordForm({
           >
             {loading && <Spinner className="mr-2 h-5 w-5" />} <Translated i18nKey="password.submit" namespace="register" />
           </Button>
+          <div className="flex justify-start">
+            <BackButton data-testid="back-button" />
+          </div>
         </div>
       </form>
     </>
