@@ -41,7 +41,6 @@ export function LDAPUsernamePasswordForm({
   });
 
   const t = useTranslations("ldap");
-  const tLogin = useTranslations("loginname");
 
   const [error, setError] = useState<string>("");
 
@@ -65,7 +64,7 @@ export function LDAPUsernamePasswordForm({
       linkFingerprint,
     })
       .catch(() => {
-        setError(tLogin("errors.couldNotStartIDPFlow"));
+        setError("Could not start LDAP flow");
         return;
       })
       .finally(() => {
