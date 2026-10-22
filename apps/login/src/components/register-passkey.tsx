@@ -77,7 +77,7 @@ export function RegisterPasskey({
     [organization, requestId, sessionId, userId, initialLoginName, router],
   );
 
-  async function submitVerify(
+  const submitVerify = useCallback(async function submitVerify(
     passkeyId: string,
     passkeyName: string,
     publicKeyCredential: any,
@@ -101,7 +101,7 @@ export function RegisterPasskey({
       });
 
     return response;
-  }
+  }, [tPasskey]);
 
   const submitRegisterAndContinue = useCallback(async (): Promise<boolean | void> => {
     // Require either sessionId or userId
@@ -199,7 +199,7 @@ export function RegisterPasskey({
     }
 
     continueAndLogin(verificationResponse.loginName);
-  }, [sessionId, userId, code, codeId, continueAndLogin, tError, tPasskey, tZitadel]);
+  }, [sessionId, userId, code, codeId, continueAndLogin, submitVerify, tError, tPasskey, tZitadel]);
 
   // Auto-submit when code is provided (similar to VerifyForm)
   useEffect(() => {

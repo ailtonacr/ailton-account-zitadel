@@ -84,8 +84,9 @@ const EXTRA_BLOCKED = new Set(["file:", "blob:", "about:"]);
 
 /**
  * Validates whether a given redirect URI is safe.
- * Safe URIs are either relative paths or absolute URLs matching the current host.
- * This prevents open redirect vulnerabilities and XSS via javascript:/data: URIs.
+ * Supports safe internal paths and external OIDC/SAML callbacks, including
+ * permitted native-app URI schemes. It rejects unsafe schemes and malformed
+ * relative references without changing the protocol-level redirect contract.
  */
 export function isSafeRedirectUri(uri: string): boolean {
   if (!uri) return false;

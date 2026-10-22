@@ -30,7 +30,7 @@ export function ConsentScreen({
   async function run(action: () => Promise<unknown>, onSuccess: (response: { redirect?: string }) => void) {
     setLoading(true);
     const response = (await action()
-      .catch(() => ({ error: "Could not complete the request" }))
+      .catch(() => ({ error: t("error.failedLoading") }))
       .finally(() => {
         setLoading(false);
       })) as { error?: string; redirect?: string };
