@@ -207,7 +207,7 @@ export function LoginPasskey({ loginName, sessionId, requestId, altPassword, org
             const pK = response?.challenges?.webAuthN?.publicKeyCredentialRequestOptions?.publicKey;
 
             if (!pK) {
-              setError(sessionResponse.error);
+              setError(t("verify.errors.couldNotRequestChallenge"));
               return;
             }
 
