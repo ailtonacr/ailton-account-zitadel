@@ -49,7 +49,7 @@ export function SessionItem({ session, reload, requestId }: { session: Session; 
     try {
       const response = await clearSession({ sessionId: id });
       if (response && "error" in response && response.error) {
-        setError(t("couldNotClearSession"));
+        setError(response.error);
         return false;
       }
       return true;

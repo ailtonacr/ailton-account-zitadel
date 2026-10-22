@@ -67,7 +67,7 @@ export function ChangePasswordForm({ passwordComplexitySettings, sessionId, logi
     });
 
     if (changeResponse && "error" in changeResponse && changeResponse.error) {
-      setError(t("change.errors.couldNotChangePassword"));
+      setError(typeof changeResponse.error === "string" ? changeResponse.error : t("change.errors.unknownError"));
       setLoading(false);
       return;
     }
@@ -96,7 +96,7 @@ export function ChangePasswordForm({ passwordComplexitySettings, sessionId, logi
         setLoading(false);
       });
 
-    handleServerActionResponse(passwordResponse as any, router, setSamlData, () => setError(t("change.errors.couldNotVerifyPassword")));
+    handleServerActionResponse(passwordResponse as any, router, setSamlData, setError);
 
     return;
   }

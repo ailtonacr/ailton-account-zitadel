@@ -36,7 +36,7 @@ export function ConsentScreen({
       })) as { error?: string; redirect?: string };
 
     if (response?.error) {
-      setError(t("error.failedLoading"));
+      setError(response.error);
       return;
     }
 

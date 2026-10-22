@@ -76,7 +76,7 @@ export function RegisterForm({
         requestId: requestId,
       });
 
-      handleServerActionResponse(response, router, setSamlData, () => setError(t("errors.couldNotRegisterUser")));
+      handleServerActionResponse(response, router, setSamlData, setError);
 
       return response;
     } catch {

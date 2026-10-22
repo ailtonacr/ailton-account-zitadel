@@ -82,7 +82,7 @@ export function SetPasswordForm({
       });
 
     if (response && "error" in response && typeof response.error === "string") {
-      setError(t("set.errors.couldNotResetPassword"));
+      setError(response.error);
       return;
     }
   }
@@ -109,7 +109,7 @@ export function SetPasswordForm({
 
     if (changeResponse && "error" in changeResponse) {
       setLoading(false);
-      setError(t("set.errors.couldNotSetPassword"));
+      setError(changeResponse.error);
       return;
     }
 
@@ -144,7 +144,7 @@ export function SetPasswordForm({
     });
 
     setLoading(false);
-    handleServerActionResponse(passwordResponse as any, router, setSamlData, () => setError(t("set.errors.couldNotVerifyPassword")));
+    handleServerActionResponse(passwordResponse as any, router, setSamlData, setError);
 
     return;
   }

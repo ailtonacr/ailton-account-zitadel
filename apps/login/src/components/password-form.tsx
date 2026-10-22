@@ -59,7 +59,7 @@ export function PasswordForm({ loginSettings, loginName, organization, defaultOr
         requestId,
       });
 
-      handleServerActionResponse(response, router, setSamlData, () => setError(t("verify.errors.couldNotVerifyPassword")));
+      handleServerActionResponse(response, router, setSamlData, setError);
     } catch {
       setError(t("verify.errors.couldNotVerifyPassword"));
     } finally {
@@ -87,7 +87,7 @@ export function PasswordForm({ loginSettings, loginName, organization, defaultOr
       });
 
     if (response && "error" in response) {
-      setError(t("errors.couldNotSendResetLink"));
+      setError(response.error as string);
       return;
     }
 

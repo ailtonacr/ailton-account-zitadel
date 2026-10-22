@@ -74,7 +74,7 @@ export function VerifyForm({ userId, loginName, organization, requestId, code, i
       });
 
     if (response && "error" in response && response?.error) {
-      setError(t("errors.couldNotResendEmail"));
+      setError(response.error);
       return;
     }
 
@@ -103,7 +103,7 @@ export function VerifyForm({ userId, loginName, organization, requestId, code, i
           requestId: requestId,
         });
 
-        handleServerActionResponse(response, router, setSamlData, () => setError(t("errors.couldNotVerifyUser")));
+        handleServerActionResponse(response, router, setSamlData, setError);
       } catch {
         setError(t("errors.couldNotVerifyUser"));
       } finally {
