@@ -91,8 +91,8 @@ export function TotpRegister({ uri, loginName, sessionId, requestId, organizatio
           }
         }
       })
-      .catch(() => {
-        setError(t("errors.couldNotVerifyCode"));
+      .catch((e) => {
+        setError(e.message);
         return;
       })
       .finally(() => {
