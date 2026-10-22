@@ -46,7 +46,7 @@ export function LoginPasskey({ loginName, sessionId, requestId, altPassword, org
           const pK = response?.challenges?.webAuthN?.publicKeyCredentialRequestOptions?.publicKey;
 
           if (!pK) {
-            setError(t("verify.errors.couldNotRequestChallenge"));
+            setError(sessionResponse.error);
             setLoading(false);
             return;
           }
@@ -92,7 +92,7 @@ export function LoginPasskey({ loginName, sessionId, requestId, altPassword, org
     })
       .catch((error) => {
         console.error(error);
-        setError(t("verify.errors.couldNotRequestChallenge"));
+        setError(sessionResponse.error);
         return;
       })
       .finally(() => {
@@ -100,7 +100,7 @@ export function LoginPasskey({ loginName, sessionId, requestId, altPassword, org
       });
 
     if (sessionResponse && "error" in sessionResponse && sessionResponse.error) {
-      setError(t("verify.errors.couldNotRequestChallenge"));
+      setError(sessionResponse.error);
       return;
     }
 
@@ -120,7 +120,7 @@ export function LoginPasskey({ loginName, sessionId, requestId, altPassword, org
         requestId,
       });
 
-      const handled = handleServerActionResponse(response, router, setSamlData, () => setError(t("verify.errors.verificationFailed")));
+      const handled = handleServerActionResponse(response, router, setSamlData, setError);
 
       if (!handled) {
         if (!response) {
@@ -207,7 +207,7 @@ export function LoginPasskey({ loginName, sessionId, requestId, altPassword, org
             const pK = response?.challenges?.webAuthN?.publicKeyCredentialRequestOptions?.publicKey;
 
             if (!pK) {
-              setError(t("verify.errors.couldNotRequestChallenge"));
+              setError(sessionResponse.error);
               return;
             }
 
