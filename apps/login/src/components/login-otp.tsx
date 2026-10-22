@@ -94,7 +94,7 @@ export function LoginOTP({ host, loginName, sessionId, requestId, organization, 
         requestId,
       });
     } catch {
-      return { error: response.error };
+      return { error: t("errors.couldNotRequestChallenge") };
     }
 
     if (response && "error" in response && response.error) {
@@ -162,7 +162,7 @@ export function LoginOTP({ host, loginName, sessionId, requestId, organization, 
       requestId,
     })
       .catch(() => {
-        setError(response.error);
+        setError(t("errors.couldNotVerifyCode"));
         return;
       })
       .finally(() => {
