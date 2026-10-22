@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { Translated } from "./translated";
 
 type Props = {
   url: string;
@@ -23,9 +22,7 @@ export function AutoSubmitForm({ url, fields }: Props) {
         <input key={key} type="hidden" name={key} value={value} />
       ))}
       <noscript>
-        <button type="submit">
-          <Translated i18nKey="submit" namespace="loginname" />
-        </button>
+        <button type="submit">Continue</button>
       </noscript>
     </form>
   );
