@@ -26,6 +26,20 @@ describe("DynamicTheme — universal presentation", () => {
     expect(screen.queryByRole("img")).toBeNull();
   });
 
+  it("preserves additional sections instead of silently discarding them", () => {
+    render(
+      <DynamicTheme>
+        <div><h1>Login heading</h1></div>
+        <form><input aria-label="Username" /></form>
+        <p>Additional login guidance</p>
+      </DynamicTheme>,
+    );
+
+    expect(screen.getByRole("heading", { name: "Login heading" })).toBeTruthy();
+    expect(screen.getByLabelText("Username")).toBeTruthy();
+    expect(screen.getByText("Additional login guidance")).toBeTruthy();
+  });
+
   it("uses the logo configured by ZITADEL branding", () => {
     const branding = { lightTheme: { logoUrl: "/dynamic-logo.svg" } } as unknown as BrandingSettings;
 
