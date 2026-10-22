@@ -50,7 +50,7 @@ describe("DynamicTheme — universal presentation", () => {
       </DynamicTheme>,
     );
 
-    expect(screen.getAllByAltText("logo")).toHaveLength(2);
+    expect(screen.getAllByAltText("logo")).toHaveLength(1);
     screen.getAllByAltText("logo").forEach((image) => {
       expect(image.getAttribute("src")).toBe("/dynamic-logo.svg");
     });
