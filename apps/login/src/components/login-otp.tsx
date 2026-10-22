@@ -94,11 +94,11 @@ export function LoginOTP({ host, loginName, sessionId, requestId, organization, 
         requestId,
       });
     } catch {
-      return { error: t("errors.couldNotRequestChallenge") };
+      return { error: response.error };
     }
 
     if (response && "error" in response && response.error) {
-      return { error: t("errors.couldNotRequestChallenge") };
+      return { error: response.error };
     }
 
     return response;
@@ -111,7 +111,7 @@ export function LoginOTP({ host, loginName, sessionId, requestId, organization, 
       updateSessionForOTPChallenge()
         .then((response) => {
           if (response?.error) {
-            setError(t("errors.couldNotVerifyCode"));
+            setError(response.error);
           }
         })
         .finally(() => {
@@ -162,7 +162,7 @@ export function LoginOTP({ host, loginName, sessionId, requestId, organization, 
       requestId,
     })
       .catch(() => {
-        setError(t("errors.couldNotVerifyCode"));
+        setError(response.error);
         return;
       })
       .finally(() => {
@@ -170,7 +170,7 @@ export function LoginOTP({ host, loginName, sessionId, requestId, organization, 
       });
 
     if (response && "error" in response && response.error) {
-      setError(t("errors.couldNotVerifyCode"));
+      setError(response.error);
       return;
     }
 
@@ -201,7 +201,7 @@ export function LoginOTP({ host, loginName, sessionId, requestId, organization, 
           );
           setLoading(false);
 
-          handleServerActionResponse(callbackResponse, router, setSamlData, () => setError(t("errors.couldNotVerifyCode")));
+          handleServerActionResponse(callbackResponse, router, setSamlData, setError);
         } else {
           setLoading(false);
         }
@@ -228,7 +228,7 @@ export function LoginOTP({ host, loginName, sessionId, requestId, organization, 
                   setLoading(true);
                   const response = await updateSessionForOTPChallenge();
                   if (response?.error) {
-                    setError(t("errors.couldNotVerifyCode"));
+                    setError(response.error);
                   }
                   setLoading(false);
                 }}
