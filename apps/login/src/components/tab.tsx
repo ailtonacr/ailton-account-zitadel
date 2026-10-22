@@ -18,8 +18,8 @@ export const Tab = ({ path, item: { slug, text } }: { path: string; item: Item }
     <Link
       href={href}
       className={clsx("mt-2 mr-2 rounded-lg px-3 py-1 text-sm font-medium", {
-        "bg-gray-700 text-gray-100 hover:bg-gray-500 hover:text-white": !isActive,
-        "bg-blue-500 text-white": isActive,
+        "border border-button-light-border bg-background-light-400 text-text-light-500 hover:bg-background-light-300 dark:border-button-dark-border dark:bg-background-dark-400 dark:text-text-dark-500 dark:hover:bg-background-dark-300": !isActive,
+        "bg-primary-light-500 text-primary-light-contrast-500 dark:bg-primary-dark-500 dark:text-primary-dark-contrast-500": isActive,
       })}
     >
       {text}

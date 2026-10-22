@@ -26,7 +26,7 @@ const styles = (error: boolean, disabled: boolean, roundnessClasses: string = "r
       "focus:outline-none focus:ring-2 focus:ring-primary-light-500/20 dark:focus:ring-primary-dark-500/20 text-base text-input-light-label dark:text-input-dark-label placeholder:text-text-light-secondary-500 dark:placeholder:text-text-dark-secondary-500": true,
       "border border-warn-light-500 dark:border-warn-dark-500 hover:border-warn-light-500 hover:dark:border-warn-dark-500 focus:border-warn-light-500 focus:dark:border-warn-dark-500":
         error,
-      "pointer-events-none text-gray-500 dark:text-gray-800 border border-input-light-border dark:border-input-dark-border hover:border-light-hoverborder hover:dark:border-hoverborder cursor-default":
+      "pointer-events-none text-text-light-secondary-500 dark:text-text-dark-secondary-500 border border-input-light-border dark:border-input-dark-border hover:border-light-hoverborder hover:dark:border-hoverborder cursor-default":
         disabled,
     },
     roundnessClasses, // Apply the full roundness classes directly
@@ -94,7 +94,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
         </div>
 
         {success && (
-          <div className="text-md mt-1 flex flex-row items-center text-green-500">
+          <div className="text-md mt-1 flex flex-row items-center text-primary-light-500 dark:text-primary-dark-500">
             <CheckCircleIcon className="h-4 w-4" />
             <span className="ml-1">{success}</span>
           </div>
