@@ -74,3 +74,17 @@ html {
     background-position: -200% 0;
   }
 }
+
+// Mobile Login V2 uses the Figma form stack without a decorative card.
+// Other native ZITADEL cards retain their configured appearance.
+@media (max-width: 639px) {
+  .login-auth-card,
+  .dark .login-auth-card {
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    backdrop-filter: none !important;
+  }
+}

@@ -26,6 +26,17 @@ describe("DynamicTheme — universal presentation", () => {
     expect(screen.queryByRole("img")).toBeNull();
   });
 
+  it("marks only the authentication card for mobile presentation", () => {
+    const { container } = render(
+      <DynamicTheme>
+        <div><h1>Mobile heading</h1></div>
+        <form><input aria-label="Mobile field" /></form>
+      </DynamicTheme>,
+    );
+    expect(container.querySelector(".login-auth-card")).toBeTruthy();
+    expect(screen.getByLabelText("Mobile field")).toBeTruthy();
+  });
+
   it("preserves additional sections instead of silently discarding them", () => {
     render(
       <DynamicTheme>
