@@ -33,14 +33,14 @@ export const BaseButton = forwardRef<HTMLButtonElement, SignInWithIdentityProvid
       ref={ref}
       disabled={formStatus.pending}
       className={clsx(
-        `text-text-light-500 focus:border-primary-light-500 dark:text-text-dark-500 focus:dark:border-primary-dark-500 flex flex-1 cursor-pointer flex-row items-center px-4 text-sm transition-all outline-none hover:border-black hover:dark:border-white`,
+        `text-text-light-500 dark:text-text-dark-500 flex min-h-12 w-full flex-1 cursor-pointer flex-row items-center justify-center px-4 py-2 text-sm font-medium transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-light-500 focus-visible:ring-offset-2 dark:focus-visible:ring-primary-dark-500 dark:focus-visible:ring-offset-background-dark-500 hover:border-primary-light-500 dark:hover:border-primary-dark-500`,
         buttonRoundness,
         idpButtonAppearance,
         `bg-background-light-400 dark:bg-background-dark-500`, // Keep background as fallback for non-glass themes
         props.className,
       )}
     >
-      <div className="flex flex-1 items-center justify-between gap-4">
+      <div className="flex flex-1 items-center justify-center gap-4">
         <div className="flex flex-1 flex-row items-center">{props.children}</div>
         {formStatus.pending && <Loader2Icon className="h-4 w-4 animate-spin" />}
       </div>

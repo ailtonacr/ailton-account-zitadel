@@ -13,8 +13,9 @@ export function VerifySuccessContinue({ continueUrl }: Props) {
   const t = useTranslations("verify");
 
   return (
-    <div className="mt-8 flex w-full flex-row items-center justify-end">
+    <div className="mt-6 w-full">
       <Button
+        className="w-full"
         type="button"
         variant={ButtonVariants.Primary}
         onClick={() => router.push(continueUrl)}

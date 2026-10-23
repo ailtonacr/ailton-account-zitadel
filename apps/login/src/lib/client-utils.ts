@@ -57,14 +57,26 @@ export function handleServerActionResponse(
 }
 
 /**
- * Returns true if the URL is external (absolute URL or custom protocol).
- * Relative paths (starting with "/" but not "//") are considered internal.
+ * Resolve relative URLs against a fixed origin rather than trusting only the
+ * leading slash: browsers treat /\\host as a network-path reference.
+ * Keep relative URLs for our own routes and absolute custom schemes for
+ * registered OIDC native-app callbacks.
  */
-export function isExternalUrl(url: string): boolean {
-  if (url.startsWith("/") && !url.startsWith("//")) {
+function isInternalPath(uri: string): boolean {
+  if (!uri.startsWith("/") || uri.startsWith("//") || uri.includes("\\") || /[\u0000-\u001f\u007f]/.test(uri)) {
     return false;
   }
-  return true;
+
+  try {
+    const base = "https://zitadel.invalid";
+    return new URL(uri, base).origin === base;
+  } catch {
+    return false;
+  }
+}
+
+export function isExternalUrl(url: string): boolean {
+  return !isInternalPath(url);
 }
 
 const SANITIZE_BLANK = "about:blank";
@@ -72,15 +84,21 @@ const EXTRA_BLOCKED = new Set(["file:", "blob:", "about:"]);
 
 /**
  * Validates whether a given redirect URI is safe.
- * Safe URIs are either relative paths or absolute URLs matching the current host.
- * This prevents open redirect vulnerabilities and XSS via javascript:/data: URIs.
+ * Supports safe internal paths and external OIDC/SAML callbacks, including
+ * permitted native-app URI schemes. It rejects unsafe schemes and malformed
+ * relative references without changing the protocol-level redirect contract.
  */
 export function isSafeRedirectUri(uri: string): boolean {
   if (!uri) return false;
 
-  // 1. Relative paths are generally safe
-  if (uri.startsWith("/") && !uri.startsWith("//")) {
+  // Only paths that stay on the Login origin may use client-side routing.
+  if (isInternalPath(uri)) {
     return true;
+  }
+
+  // Never reinterpret a malformed path as an external OAuth callback.
+  if (uri.startsWith("/") || uri.startsWith("\\")) {
+    return false;
   }
 
   const sanitized = sanitizeUrl(uri);

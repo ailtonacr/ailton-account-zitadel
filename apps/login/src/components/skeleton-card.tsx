@@ -36,7 +36,7 @@ export const SkeletonCard = ({
   return (
     <div
       className={clsx(
-        "bg-gray-900/80",
+        "bg-background-light-300 dark:bg-background-dark-300",
         actualPadding,
         {
           "relative overflow-hidden before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_1.5s_infinite] before:bg-gradient-to-r before:from-transparent before:via-white/10 before:to-transparent":
@@ -46,9 +46,9 @@ export const SkeletonCard = ({
       )}
     >
       <div className={actualSpacing}>
-        <div className={clsx("h-14 bg-gray-700", actualRoundness.split(" ")[0])} />
-        <div className={clsx("h-3 w-11/12 bg-gray-700", actualRoundness.split(" ")[0])} />
-        <div className={clsx("h-3 w-8/12 bg-gray-700", actualRoundness.split(" ")[0])} />
+        <div className={clsx("h-14 bg-background-light-400 dark:bg-background-dark-400", actualRoundness.split(" ")[0])} />
+        <div className={clsx("h-3 w-11/12 bg-background-light-400 dark:bg-background-dark-400", actualRoundness.split(" ")[0])} />
+        <div className={clsx("h-3 w-8/12 bg-background-light-400 dark:bg-background-dark-400", actualRoundness.split(" ")[0])} />
       </div>
     </div>
   );

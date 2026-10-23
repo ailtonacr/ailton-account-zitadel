@@ -52,7 +52,7 @@ export default async function Page(props: { searchParams: Promise<Record<string 
 
   return (
     <DynamicTheme branding={branding}>
-      <div className="flex flex-col space-y-4">
+      <div className="flex flex-col space-y-2">
         <h1>
           <Translated i18nKey="title" namespace="loginname" />
         </h1>
@@ -77,7 +77,7 @@ export default async function Page(props: { searchParams: Promise<Record<string 
         )}
 
         {loginSettings?.allowExternalIdp && !!identityProviders?.length && (
-          <div className="w-full pt-6 pb-4">
+          <div className="w-full pt-5 pb-1">
             <SignInWithIdp
               identityProviders={identityProviders}
               requestId={requestId}
@@ -88,6 +88,7 @@ export default async function Page(props: { searchParams: Promise<Record<string 
             ></SignInWithIdp>
           </div>
         )}
+
       </div>
     </DynamicTheme>
   );

@@ -103,13 +103,13 @@ export function RegisterFormIDPIncomplete({
                 autoFocus
                 required
                 {...register("username", { required: "Username is required" })}
-                label="Username"
+                label={"Username"}
                 error={errors.username?.message as string}
                 data-testid="username-text-input"
               />
             </div>
           )}
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
             <div className="">
               <TextInput
                 type="firstname"
@@ -153,9 +153,9 @@ export function RegisterFormIDPIncomplete({
           </div>
         )}
 
-        <div className="mt-8 flex w-full flex-row items-center justify-between">
-          <BackButton data-testid="back-button" />
+        <div className="mt-6 flex w-full flex-col gap-3">
           <Button
+            className="w-full"
             type="submit"
             variant={ButtonVariants.Primary}
             disabled={loading || !formState.isValid}
@@ -164,6 +164,9 @@ export function RegisterFormIDPIncomplete({
           >
             {loading && <Spinner className="mr-2 h-5 w-5" />} <Translated i18nKey="submit" namespace="register" />
           </Button>
+          <div className="flex justify-start">
+            <BackButton data-testid="back-button" />
+          </div>
         </div>
       </form>
     </>

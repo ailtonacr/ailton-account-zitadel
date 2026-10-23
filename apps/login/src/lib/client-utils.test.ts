@@ -17,9 +17,12 @@ describe("isSafeRedirectUri", () => {
     expect(await isSafeRedirectUri("/")).toBe(true);
   });
 
-  test("should reject protocol-relative paths", async () => {
+  test("should reject protocol-relative paths and backslash origin bypasses", async () => {
     expect(await isSafeRedirectUri("//evil.com")).toBe(false);
     expect(await isSafeRedirectUri("\\\\evil.com")).toBe(false);
+    expect(await isSafeRedirectUri("/\\evil.com/path")).toBe(false);
+    expect(await isSafeRedirectUri("/\\\\evil.com/path")).toBe(false);
+    expect(await isSafeRedirectUri("/safe\\evil.com")).toBe(false);
   });
 
   test("should allow absolute URLs matching the current host", async () => {
@@ -67,6 +70,11 @@ describe("isExternalUrl", () => {
     expect(isExternalUrl("com.example.app://oauth/callback")).toBe(true);
     expect(isExternalUrl("io.zitadel.app://auth")).toBe(true);
     expect(isExternalUrl("flutter-app://callback?code=abc&state=xyz")).toBe(true);
+  });
+
+  test("should treat malformed backslash paths as external, so routing never handles them", () => {
+    expect(isExternalUrl("/\\evil.com/path")).toBe(true);
+    expect(isExternalUrl("/safe\\evil.com")).toBe(true);
   });
 
   test("should return true for protocol-relative URLs", () => {

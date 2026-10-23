@@ -38,6 +38,26 @@ describe("TextInput Component", () => {
   });
 
   describe("Input States", () => {
+    it("keeps a suffix anchored to the input when an error is present", () => {
+      const { container, rerender } = render(<TextInput label="Username" suffix="example.org" />);
+      expect(container.querySelector("input")?.parentElement).toHaveClass("relative");
+
+      rerender(<TextInput label="Username" suffix="example.org" error="Required" />);
+      const input = container.querySelector("input");
+      expect(input?.parentElement).toHaveClass("relative");
+      expect(input?.className).toContain("pr-24");
+      expect(input?.parentElement?.querySelector("span")?.textContent).toBe("@example.org");
+      expect(screen.getByRole("alert")).toHaveTextContent("Required");
+    });
+
+    it("exposes an accessible error without reserving extra space when valid", () => {
+      const { rerender } = render(<TextInput label="Email" />);
+      expect(screen.queryByRole("alert")).toBeNull();
+      rerender(<TextInput label="Email" error="Invalid email" />);
+      expect(screen.getByRole("alert")).toHaveTextContent("Invalid email");
+      expect(screen.getByLabelText("Email")).toHaveAttribute("aria-invalid", "true");
+    });
+
     it("should render disabled state", () => {
       const { container } = render(<TextInput label="Disabled" disabled />);
       const input = container.querySelector("input");

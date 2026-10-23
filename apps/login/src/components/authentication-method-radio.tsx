@@ -21,8 +21,8 @@ export function AuthenticationMethodRadio({
     <div className="w-full">
       <div className="mx-auto w-full max-w-md">
         <RadioGroup value={selected} onChange={selectionChanged}>
-          <Label className="sr-only">Server size</Label>
-          <div className="flex flex-row space-x-4">
+          <Label className="sr-only"><Translated i18nKey="selectMethod" namespace="register" /></Label>
+          <div className="flex flex-col gap-3 sm:flex-row">
             {methods.map((method) => (
               <Radio
                 key={method}
@@ -33,7 +33,7 @@ export function AuthenticationMethodRadio({
                     checked
                       ? "bg-background-light-400 ring-primary-light-500 dark:bg-background-dark-400 dark:ring-primary-dark-500 ring-2"
                       : "bg-background-light-400 dark:bg-background-dark-400"
-                  } boder-divider-light dark:border-divider-dark relative flex h-full flex-1 cursor-pointer rounded-lg border px-5 py-4 hover:shadow-lg focus:outline-none dark:hover:bg-white/10`
+                  } border-divider-light dark:border-divider-dark relative flex min-h-14 flex-1 cursor-pointer rounded-lg border px-4 py-3 transition-colors hover:border-primary-light-500 focus:outline-none dark:hover:border-primary-dark-500`
                 }
               >
                 <div className="flex w-full flex-col items-center text-sm">
@@ -44,7 +44,7 @@ export function AuthenticationMethodRadio({
                       viewBox="0 0 24 24"
                       strokeWidth="1.5"
                       stroke="currentColor"
-                      className="mb-3 h-8 w-8"
+                      className="mb-2 h-5 w-5"
                     >
                       <path
                         strokeLinecap="round"

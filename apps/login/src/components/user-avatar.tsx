@@ -36,11 +36,11 @@ export function UserAvatar({ loginName, displayName, showDropdown, searchParams 
   }
 
   return (
-    <div className={`flex h-full flex-row items-center border p-[1px] dark:border-white/20 ${userAvatarRoundness}`}>
+    <div className={`flex min-h-12 w-full flex-row items-center border border-divider-light bg-background-light-400 px-3 py-1 dark:border-divider-dark dark:bg-background-dark-400 ${userAvatarRoundness}`}>
       <div>
         <Avatar size="small" name={displayName ?? loginName ?? ""} loginName={loginName ?? ""} />
       </div>
-      <span className="text-14px ml-4 max-w-[250px] overflow-hidden pr-4 text-ellipsis">{loginName}</span>
+      <span className="ml-3 max-w-[250px] truncate pr-3 text-sm">{loginName}</span>
       <span className="flex-grow"></span>
       {showDropdown && (
         <Link
