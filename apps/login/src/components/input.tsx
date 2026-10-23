@@ -65,32 +65,31 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
         </span>
         <div className="relative flex min-w-0">
           <input
-          suppressHydrationWarning
-          ref={ref}
-          className={clsx(styles(!!error, !!disabled, actualRoundness), "w-full min-w-0", suffix && "pr-24")}
-          defaultValue={defaultValue}
-          required={required}
-          disabled={disabled}
-          aria-invalid={!!error}
-          placeholder={placeholder}
-          autoComplete={props.autoComplete ?? "off"}
-          onChange={(e) => onChange && onChange(e)}
-          onBlur={(e) => onBlur && onBlur(e)}
-          {...props}
-        />
+            suppressHydrationWarning
+            ref={ref}
+            className={clsx(styles(!!error, !!disabled, actualRoundness), "w-full min-w-0", suffix && "pr-24")}
+            defaultValue={defaultValue}
+            required={required}
+            disabled={disabled}
+            aria-invalid={!!error}
+            placeholder={placeholder}
+            autoComplete={props.autoComplete ?? "off"}
+            onChange={(e) => onChange && onChange(e)}
+            onBlur={(e) => onBlur && onBlur(e)}
+            {...props}
+          />
 
-        {suffix && (
-          <span
-            className={clsx(
-              "bg-background-light-500 dark:bg-background-dark-500 pointer-events-none absolute right-[3px] top-1/2 z-10 max-w-[60%] -translate-y-1/2 transform truncate p-2",
-              // Extract just the roundness part for the suffix (no padding)
-              actualRoundness.split(" ")[0], // Take only the first part (rounded-full, rounded-md, etc.)
-            )}
-          >
-            @{suffix}
-          </span>
-        )}
-
+          {suffix && (
+            <span
+              className={clsx(
+                "bg-background-light-500 dark:bg-background-dark-500 pointer-events-none absolute right-[3px] top-1/2 z-10 max-w-[60%] -translate-y-1/2 transform truncate p-2",
+                // Extract just the roundness part for the suffix (no padding)
+                actualRoundness.split(" ")[0], // Take only the first part (rounded-full, rounded-md, etc.)
+              )}
+            >
+              @{suffix}
+            </span>
+          )}
         </div>
         {error && (
           <span className="mt-1 text-xs leading-5 text-warn-light-500 dark:text-warn-dark-500" role="alert">

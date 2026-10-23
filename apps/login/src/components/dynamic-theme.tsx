@@ -35,12 +35,7 @@ export function DynamicTheme({
   const hasLogo = !!(lightLogo || darkLogo);
 
   const logo = hasLogo ? (
-    <Logo
-      lightSrc={lightLogo}
-      darkSrc={darkLogo}
-      height={44}
-      width={148}
-    />
+    <Logo lightSrc={lightLogo} darkSrc={darkLogo} height={44} width={148} />
   ) : null;
 
   return (
