@@ -38,6 +38,14 @@ describe("TextInput Component", () => {
   });
 
   describe("Input States", () => {
+    it("exposes an accessible error without reserving extra space when valid", () => {
+      const { rerender } = render(<TextInput label="Email" />);
+      expect(screen.queryByRole("alert")).toBeNull();
+      rerender(<TextInput label="Email" error="Invalid email" />);
+      expect(screen.getByRole("alert")).toHaveTextContent("Invalid email");
+      expect(screen.getByLabelText("Email")).toHaveAttribute("aria-invalid", "true");
+    });
+
     it("should render disabled state", () => {
       const { container } = render(<TextInput label="Disabled" disabled />);
       const input = container.querySelector("input");

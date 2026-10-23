@@ -76,7 +76,7 @@ export function SignInWithIdp({
   return (
     <div className="flex w-full flex-col gap-3 text-sm">
       {state?.samlData && <AutoSubmitForm url={state.samlData.url} fields={state.samlData.fields} />}
-      {showLabel && (
+      {showLabel && !!identityProviders?.length && (
         <p className="ztdl-p flex items-center gap-3 py-2 text-center before:h-px before:flex-1 before:bg-divider-light after:h-px after:flex-1 after:bg-divider-light dark:before:bg-divider-dark dark:after:bg-divider-dark">
           <Translated i18nKey="orSignInWith" namespace="idp" />
         </p>

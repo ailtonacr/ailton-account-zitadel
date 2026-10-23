@@ -7,7 +7,7 @@ import { Translated } from "./translated";
 
 const cardClasses = (alreadyAdded: boolean) =>
   clsx(
-    "group relative block min-h-14 space-y-1.5 rounded-md border border-divider-light bg-background-light-400 px-4 py-3 transition-colors dark:border-divider-dark dark:bg-background-dark-400 ",
+    "group relative block min-h-16 space-y-1.5 rounded-md border border-divider-light bg-background-light-400 px-4 py-3 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-light-500 focus-visible:ring-offset-2 dark:border-divider-dark dark:bg-background-dark-400 dark:focus-visible:ring-primary-dark-500 dark:focus-visible:ring-offset-background-dark-500",
     alreadyAdded ? "cursor-default opacity-60" : "hover:border-primary-light-500 dark:hover:border-primary-dark-500",
   );
 
@@ -26,7 +26,7 @@ export const TOTP = (alreadyAdded: boolean, link: string) => {
     <LinkWrapper key={link} alreadyAdded={alreadyAdded} link={link}>
       <div className={clsx("flex items-center font-medium", alreadyAdded ? "opacity-50" : "")}>
         <svg
-          className="mr-3 h-5 w-5 -translate-x-[2px] transform fill-current text-black dark:text-white"
+          className="mr-3 h-5 w-5 -translate-x-[2px] transform fill-current text-text-light-500 dark:text-text-dark-500"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
         >
