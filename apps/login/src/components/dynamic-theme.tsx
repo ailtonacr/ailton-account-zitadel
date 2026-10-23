@@ -42,7 +42,7 @@ export function DynamicTheme({
     <ThemeWrapper branding={branding}>
       {isSideBySide && hasSections ? (
         <div className="mx-auto w-full max-w-[960px] px-4 py-4 sm:px-6">
-          <Card className="w-full overflow-hidden" padding="px-6 py-8 sm:px-10 sm:py-12">
+          <Card className="login-auth-card w-full overflow-hidden" padding="px-6 py-8 sm:px-10 sm:py-12">
             <div className="grid min-w-0 gap-8 md:grid-cols-2 md:gap-12">
               <div className="flex min-w-0 flex-col justify-center gap-8">
                 {hasLogo && <div className="flex justify-start">{logo}</div>}

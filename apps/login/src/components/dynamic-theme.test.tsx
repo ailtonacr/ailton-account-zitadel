@@ -27,6 +27,22 @@ describe("DynamicTheme — universal presentation", () => {
     expect(screen.queryByRole("img")).toBeNull();
   });
 
+  it("shares the mobile borderless treatment in side-by-side mode", () => {
+    responsive.isSideBySide = true;
+    try {
+      const { container } = render(
+        <DynamicTheme>
+          <h1>Sign in</h1>
+          <form><input aria-label="Account" /></form>
+        </DynamicTheme>,
+      );
+      expect(container.querySelector(".login-auth-card")).toBeTruthy();
+      expect(screen.getByLabelText("Account")).toBeTruthy();
+    } finally {
+      responsive.isSideBySide = false;
+    }
+  });
+
   it("uses a single column when a side-by-side screen has only one section", () => {
     responsive.isSideBySide = true;
     try {
