@@ -38,6 +38,17 @@ describe("TextInput Component", () => {
   });
 
   describe("Input States", () => {
+    it("keeps a suffix anchored to the input when an error is present", () => {
+      const { rerender } = render(<TextInput label="Username" suffix="example.org" />);
+      expect(screen.getByLabelText("Username").parentElement).toHaveClass("relative");
+      rerender(<TextInput label="Username" suffix="example.org" error="Required" />);
+      const input = screen.getByLabelText("Username");
+      expect(input.parentElement).toHaveClass("relative");
+      expect(input.className).toContain("pr-24");
+      expect(input.parentElement?.querySelector("span")?.textContent).toBe("@example.org");
+      expect(screen.getByRole("alert")).toHaveTextContent("Required");
+    });
+
     it("exposes an accessible error without reserving extra space when valid", () => {
       const { rerender } = render(<TextInput label="Email" />);
       expect(screen.queryByRole("alert")).toBeNull();

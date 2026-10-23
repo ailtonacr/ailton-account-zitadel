@@ -78,10 +78,23 @@ describe("DynamicTheme — universal presentation", () => {
       </DynamicTheme>,
     );
 
-    expect(screen.getAllByAltText("logo")).toHaveLength(1);
+    expect(screen.getAllByAltText("logo")).toHaveLength(2);
     screen.getAllByAltText("logo").forEach((image) => {
       expect(image.getAttribute("src")).toBe("/dynamic-logo.svg");
     });
     expect(screen.getByRole("heading", { name: "Configured heading" })).toBeTruthy();
+  });
+
+  it("keeps the dark logo when no light logo is configured", () => {
+    const branding = { darkTheme: { logoUrl: "/only-dark.svg" } } as unknown as BrandingSettings;
+    render(
+      <DynamicTheme branding={branding}>
+        <div><h1>Login</h1></div>
+        <form><input aria-label="Username" /></form>
+      </DynamicTheme>,
+    );
+    const logos = screen.getAllByAltText("logo");
+    expect(logos).toHaveLength(2);
+    logos.forEach((img) => expect(img.getAttribute("src")).toBe("/only-dark.svg"));
   });
 });

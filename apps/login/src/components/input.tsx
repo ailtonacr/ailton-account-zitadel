@@ -63,10 +63,11 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
         <span className={`mb-2 leading-5 ${error ? "text-warn-light-500 dark:text-warn-dark-500" : ""}`}>
           {label} {required && "*"}
         </span>
-        <input
+        <div className="relative flex min-w-0">
+          <input
           suppressHydrationWarning
           ref={ref}
-          className={styles(!!error, !!disabled, actualRoundness)}
+          className={clsx(styles(!!error, !!disabled, actualRoundness), "w-full min-w-0", suffix && "pr-24")}
           defaultValue={defaultValue}
           required={required}
           disabled={disabled}
@@ -81,7 +82,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
         {suffix && (
           <span
             className={clsx(
-              "bg-background-light-500 dark:bg-background-dark-500 absolute right-[3px] bottom-[22px] z-30 translate-y-1/2 transform p-2",
+              "bg-background-light-500 dark:bg-background-dark-500 pointer-events-none absolute right-[3px] top-1/2 z-10 max-w-[60%] -translate-y-1/2 transform truncate p-2",
               // Extract just the roundness part for the suffix (no padding)
               actualRoundness.split(" ")[0], // Take only the first part (rounded-full, rounded-md, etc.)
             )}
@@ -90,6 +91,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
           </span>
         )}
 
+        </div>
         {error && (
           <span className="mt-1 text-xs leading-5 text-warn-light-500 dark:text-warn-dark-500" role="alert">
             {error}

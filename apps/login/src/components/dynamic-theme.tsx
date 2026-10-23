@@ -30,12 +30,14 @@ export function DynamicTheme({
   const hasSections = childArray.length > 1;
   const heading = childArray[0] ?? null;
   const form = hasSections ? childArray.slice(1) : heading;
-  const hasLogo = !!(branding?.lightTheme?.logoUrl || branding?.darkTheme?.logoUrl);
+  const lightLogo = branding?.lightTheme?.logoUrl || branding?.darkTheme?.logoUrl;
+  const darkLogo = branding?.darkTheme?.logoUrl || branding?.lightTheme?.logoUrl;
+  const hasLogo = !!(lightLogo || darkLogo);
 
   const logo = hasLogo ? (
     <Logo
-      lightSrc={branding?.lightTheme?.logoUrl}
-      darkSrc={branding?.darkTheme?.logoUrl}
+      lightSrc={lightLogo}
+      darkSrc={darkLogo}
       height={44}
       width={148}
     />
