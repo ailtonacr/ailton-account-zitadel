@@ -98,7 +98,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
         )}
 
         {success && (
-          <div className="text-md mt-1 flex flex-row items-center text-primary-light-500 dark:text-primary-dark-500">
+          <div className="text-md mt-1 flex flex-row items-center text-state-success-light-color dark:text-state-success-dark-color">
             <CheckCircleIcon className="h-4 w-4" />
             <span className="ml-1">{success}</span>
           </div>
