@@ -4,8 +4,9 @@ import type { ReactNode } from "react";
 import { describe, expect, it, vi } from "vitest";
 import { DynamicTheme } from "./dynamic-theme";
 
+const responsive = vi.hoisted(() => ({ isSideBySide: false }));
 vi.mock("@/lib/theme-hooks", () => ({
-  useResponsiveLayout: () => ({ isSideBySide: false, isResponsiveOverride: false }),
+  useResponsiveLayout: () => ({ isSideBySide: responsive.isSideBySide, isResponsiveOverride: false }),
 }));
 
 vi.mock("./theme-wrapper", () => ({
@@ -24,6 +25,22 @@ describe("DynamicTheme — universal presentation", () => {
     expect(screen.getByRole("heading", { name: "Translated heading" })).toBeTruthy();
     expect(screen.getByLabelText("Translated label")).toBeTruthy();
     expect(screen.queryByRole("img")).toBeNull();
+  });
+
+  it("uses a single column when a side-by-side screen has only one section", () => {
+    responsive.isSideBySide = true;
+    try {
+      const { container } = render(
+        <DynamicTheme>
+          <section><h1>Only status content</h1></section>
+        </DynamicTheme>,
+      );
+
+      expect(container.querySelector(".login-auth-card")).toBeTruthy();
+      expect(screen.getByRole("heading", { name: "Only status content" })).toBeTruthy();
+    } finally {
+      responsive.isSideBySide = false;
+    }
   });
 
   it("marks only the authentication card for mobile presentation", () => {

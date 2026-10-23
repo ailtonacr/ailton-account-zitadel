@@ -114,27 +114,7 @@ export function UsernameForm({
             data-testid="username-text-input"
             suffix={hideSuffix ? undefined : suffix}
           />
-          {allowRegister && (
-            <button
-              className="hover:text-primary-light-500 dark:hover:text-primary-dark-500 text-sm transition-all"
-              onClick={() => {
-                const registerParams = new URLSearchParams();
-                if (organization) {
-                  registerParams.append("organization", organization);
-                }
-                if (requestId) {
-                  registerParams.append("requestId", requestId);
-                }
 
-                router.push("/register?" + registerParams);
-              }}
-              type="button"
-              disabled={loading}
-              data-testid="register-button"
-            >
-              <Translated i18nKey="register" namespace="loginname" />
-            </button>
-          )}
         </div>
 
         {error && (
@@ -157,6 +137,29 @@ export function UsernameForm({
           <div className="flex justify-start">
             <BackButton data-testid="back-button" />
           </div>
+        </div>
+        <div className="mt-5 flex justify-center">
+          {allowRegister && (
+            <button
+              className="text-sm font-medium text-primary-light-500 transition-colors hover:underline focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-light-500 dark:text-primary-dark-500 dark:focus-visible:outline-primary-dark-500"
+              onClick={() => {
+                const registerParams = new URLSearchParams();
+                if (organization) {
+                  registerParams.append("organization", organization);
+                }
+                if (requestId) {
+                  registerParams.append("requestId", requestId);
+                }
+
+                router.push("/register?" + registerParams);
+              }}
+              type="button"
+              disabled={loading}
+              data-testid="register-button"
+            >
+              <Translated i18nKey="register" namespace="loginname" />
+            </button>
+          )}
         </div>
       </form>
     </>
